@@ -2,6 +2,7 @@ import os
 import numpy as np
 import audioread
 import librosa
+import librosa.core.audio
 from mido import MidiFile
 
 from .piano_vad import (note_detection_with_onset_offset_regress, 
@@ -553,7 +554,7 @@ def load_audio(path, sr=22050, mono=True, offset=0.0, duration=None,
                 y = librosa.core.audio.to_mono(y)
 
         if sr is not None:
-            y = librosa.core.audio.resample(y, sr_native, sr, res_type=res_type)
+            y = librosa.core.audio.resample(y, orig_sr=sr_native, target_sr=sr, res_type=res_type)
 
         else:
             sr = sr_native
